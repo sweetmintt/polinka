@@ -1,9 +1,12 @@
 package com.example.restaurantpol;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class sql {
     private static sql instance;
@@ -24,7 +27,8 @@ public class sql {
     public Connection getConnection() {
         return connection;
     }
-     public static ResultSet getuser(register user) {
+
+    public static ResultSet getuser(register user) {
         ResultSet get = null;
         String query2 = "SELECT * FROM Staff WHERE username=?";
         try {
@@ -32,8 +36,6 @@ public class sql {
             PreparedStatement statement = connection.prepareStatement(query2);
             statement.setString(1, user.getUsername());
             get = statement.executeQuery();
-            statement.close();
-            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException ex) {
@@ -52,10 +54,32 @@ public class sql {
             stat.setString(2, hashedPassword);
             stat.setString(3, user.getAccess());
             stat.executeUpdate();
-            stat.close();
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public static ObservableList<Ingredient> getIngredientsFromDatabase() {
+        ObservableList<Ingredient> ingredients = FXCollections.observableArrayList();
+        String query3 = "SELECT * FROM Ingredients";
+        try {
+            Connection connection = sql.getInstance().getConnection();
+            PreparedStatement stat = connection.prepareStatement(query3);
+            ResultSet rs = stat.executeQuery();
+            while (rs.next()) {
+                int ingredientId = rs.getInt("ingredient_id");
+                String ingredientName = rs.getString("ingredient_name");
+                String unitOfMeasurement = rs.getString("unit_of_measurement");
+                int quantityOnHand = rs.getInt("quantity_on_hand");
+                Ingredient ingredient = new Ingredient(ingredientId, ingredientName, unitOfMeasurement, quantityOnHand);
+                ingredients.add(ingredient);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return ingredients;
+    }
+
+    public void close() throws SQLException {
+        connection.close();
     }
 }

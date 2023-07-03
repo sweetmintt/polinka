@@ -1,6 +1,5 @@
 package com.example.restaurantpol;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,11 +9,101 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class Pol {
+
+    @FXML
+    private TextField fieldlogin;
+
+    @FXML
+    private TextField fieldpassword;
+
+    @FXML
+    private Button buttonvxod;
+
+    @FXML
+    private Button buttonregister;
+
+    @FXML
+    private Button buttonchange;
+
+    @FXML
+    void pol() {
+        buttonregister.setOnAction(actionEvent -> {
+            buttonregister.getScene().getWindow().hide();
+            FXMLLoader vxod = new FXMLLoader();
+            vxod.setLocation(getClass().getResource("pol2.fxml"));
+            try {
+                vxod.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Parent polina = vxod.getRoot();
+            Stage register = new Stage();
+            register.setScene(new Scene(polina));
+            register.showAndWait();
+        });
+    }
+
+    private void loginuser(String login, String password) {
+        try {
+            sql sql = com.example.restaurantpol.sql.getInstance();
+            register user = new register();
+            user.setUsername(login);
+            ResultSet rez = sql.getuser(user);
+            int k = 0;
+            try {
+                while (rez.next()) {
+                    k++;
+                }
+                if (k == 1) {
+                    new vxod();
+                }
+            } finally {
+                rez.close();
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void vxod() {
+        buttonvxod.setOnAction(actionEvent -> {
+            String login = fieldlogin.getText().trim();
+            String password = fieldpassword.getText().trim();
+            if (!login.equals("") && !password.equals("")) {
+                loginuser(login, password);
+            }
+            buttonvxod.getScene().getWindow().hide();
+            FXMLLoader vxod1 = new FXMLLoader();
+            vxod1.setLocation(getClass().getResource("pol1.fxml"));
+            try {
+                vxod1.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Parent polina = vxod1.getRoot();
+            Stage register = new Stage();
+            register.setScene(new Scene(polina));
+            register.showAndWait();
+        });
+    }
+}
+/*package com.example.restaurantpol;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Pol {
 
@@ -51,38 +140,29 @@ public class Pol {
         });
     }
     private void loginuser(String login, String password) {
-        sql sql = null;
         try {
-            sql = new sql();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        register user = new register();
-        user.setUsername(login);
-        ResultSet rez = sql.getuser(user);
-        int k = 0;
-        try {
-            while (rez.next()) {
-                k++;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        if (k == 1) {
-            if (k == 1) {
-                new vxod();
-            }
+            sql sql = new sql();
+            register user = new register();
+            user.setUsername(login);
+            ResultSet rez = sql.getuser(user);
+            int k = 0;
             try {
+                while (rez.next()) {
+                    k++;
+                }
+                if (k == 1) {
+                    new vxod();
+                }
+            } finally {
                 rez.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             }
+            //sql.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-        public void vxod() {
+    public void vxod() {
        buttonvxod.setOnAction(actionEvent -> {
             String logi1n = fieldlogin.getText().trim();
             String passwor1d = fieldpassword.getText().trim();
@@ -90,18 +170,18 @@ public class Pol {
                 loginuser(logi1n, passwor1d);
             }
             buttonvxod.getScene().getWindow().hide();
-            FXMLLoader vxod = new FXMLLoader();
-            vxod.setLocation(getClass().getResource("pol1.fxml"));
+            FXMLLoader vxod1 = new FXMLLoader();
+            vxod1.setLocation(getClass().getResource("pol1.fxml"));
             //Pol1.check();
             try {
-                vxod.load();
+                vxod1.load();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Parent polina = vxod.getRoot();
+            Parent polina = vxod1.getRoot();
             Stage register = new Stage();
             register.setScene(new Scene(polina));
             register.showAndWait();
         });
     }
-}
+ */
