@@ -7,27 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class dobavlenie {
-    public static void regist(register user) throws SQLException, ClassNotFoundException {
-        String query = "INSERT INTO Staff(username,password,access) VALUES (?,?,?)";
-        try {
-            Connection connection = null;
-            try {
-                sql bd = sql.getInstance();
-                connection = bd.getConnection();
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            PreparedStatement bd = connection.prepareStatement(query);
-            String hashedPassword = hashPassword(user.getPassword());
-            bd.setString(1, user.getUsername());
-            bd.setString(2, hashedPassword);
-            bd.setString(3, user.getAccess());
-            bd.executeUpdate();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
     protected static String hashPassword(String password) {
         if (password == null) {
             return null;

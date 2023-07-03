@@ -54,26 +54,20 @@ public class Pol2 {
             registerStage.requestFocus();
         });
     }
-
     private void register1() throws SQLException, ClassNotFoundException {
         try {
-            Connection connection = null;
-            sql bd = null;
-            try {
-                bd = sql.getInstance();
-                connection = bd.getConnection();
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            sql bd = sql.getInstance();
             String access = "";
             String username = fieldlogin.getText();
             String password = fieldpassword.getText();
-            if (buttonadmin.isSelected())
+
+            if (buttonadmin.isSelected()) {
                 access = "Администратор";
-            else
+            } else {
                 access = "Пользователь";
+            }
             register user = new register(username, password, access);
-            dobavlenie.regist(user);
+            sql.regist(user);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
