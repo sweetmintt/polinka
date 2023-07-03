@@ -8,8 +8,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.util.List;
-
 public class Pol3 {
     @FXML
     protected TableView<Ingredient> table;
@@ -36,18 +34,25 @@ public class Pol3 {
     private Button buttondelete;
 
     @FXML
-    private TextField fieldid;
+    protected static TextField fieldid;
 
     @FXML
-    private TextField fieldname;
+    protected static TextField fieldname;
 
     @FXML
-    private TextField fieldunit;
+    protected static TextField fieldunit;
 
     @FXML
-    private TextField fieldquantity;
+    protected static TextField fieldquantity;
 
-
+    @FXML
+    public void addIngredients(String ingredientId, String ingredientName, String unitOfMeasurement, String quantityOnHand){
+        ingredientId = fieldid.getText();
+        ingredientName = fieldname.getText();
+        unitOfMeasurement = fieldunit.getText();
+        quantityOnHand = fieldquantity.getText();
+        addIngredients(ingredientId, ingredientName, unitOfMeasurement, quantityOnHand);
+    }
     @FXML
     public void initialize() {
         ingredient_id.setCellValueFactory(new PropertyValueFactory<Ingredient,Integer>("ingredient_id"));

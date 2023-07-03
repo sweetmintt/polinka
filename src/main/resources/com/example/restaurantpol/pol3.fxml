@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFA07A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.restaurantpol.Pol3">
     <children>
-        <Label layoutX="193.0" layoutY="5.0" text="RESTAURANT">
+        <Label layoutX="185.0" layoutY="-1.0" text="INGREDIENTS">
             <font>
                 <Font name="Agency FB" size="60.0" />
             </font>
@@ -19,17 +19,17 @@
       <TableView fx:id="table" editable="true" layoutX="193.0" layoutY="70.0" prefHeight="316.0" prefWidth="402.0" tableMenuButtonVisible="true">
         <columns>
           <TableColumn fx:id="ingredient_id" prefWidth="45.0" text="id" />
-          <TableColumn fx:id="ingredient_name" prefWidth="145.0" text="name" />
-            <TableColumn fx:id="unit_of_measurement" minWidth="0.0" prefWidth="106.0" text="unit" />
-            <TableColumn fx:id="quantity_on_hand" prefWidth="153.0" text="quantity" />
+          <TableColumn fx:id="ingredient_name" prefWidth="135.0" text="name" />
+            <TableColumn fx:id="unit_of_measurement" minWidth="0.0" prefWidth="112.0" text="unit" />
+            <TableColumn fx:id="quantity_on_hand" prefWidth="95.0" text="quantity" />
         </columns>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
       </TableView>
-      <Button fx:id="buttonadd" layoutX="33.0" layoutY="240.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #FF00FF;" text="Add" />
+      <Button fx:id="buttonadd" layoutX="33.0" layoutY="240.0" mnemonicParsing="false" onAction="#addIngredients" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #FF00FF;" text="Add" />
       <Button fx:id="buttonupdate" layoutX="33.0" layoutY="288.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #00FF00;" text="Update" />
-      <Button fx:id="buttondelete" layoutX="33.0" layoutY="336.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" text="Delete" />
+      <Button fx:id="buttondelete" layoutX="33.0" layoutY="336.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #0000FF;" text="Delete" />
       <TextField fx:id="fieldid" alignment="CENTER" layoutX="22.0" layoutY="72.0" promptText="Id" style="-fx-background-color: #FFFAF0;" />
       <TextField fx:id="fieldname" alignment="CENTER" layoutX="22.0" layoutY="110.0" promptText="name" style="-fx-background-color: #FFFAF0;" />
       <TextField fx:id="fieldunit" alignment="CENTER" layoutX="22.0" layoutY="151.0" promptText="unit" style="-fx-background-color: #FFFAF0;" />

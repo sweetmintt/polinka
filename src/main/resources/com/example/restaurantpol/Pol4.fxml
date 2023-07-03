@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFA07A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.restaurantpol.Pol4">
+    <children>
+        <Label layoutX="229.0" layoutY="-1.0" text="DISHES">
+            <font>
+                <Font name="Agency FB" size="60.0" />
+            </font>
+        </Label>
+        <TableView fx:id="table" editable="true" layoutX="193.0" layoutY="70.0" prefHeight="316.0" prefWidth="402.0" tableMenuButtonVisible="true">
+            <columns>
+                <TableColumn fx:id="dishes_name" prefWidth="135.0" text="dishes_name" />
+                <TableColumn fx:id="ingredient_name" minWidth="0.0" prefWidth="140.0" text="ingredient_name" />
+                <TableColumn fx:id="quantity_required" prefWidth="112.0" text="quantity_required" />
+            </columns>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+        </TableView>
+        <Button fx:id="buttonadd" layoutX="33.0" layoutY="240.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #FF00FF;" text="Add" />
+        <Button fx:id="buttonupdate" layoutX="33.0" layoutY="288.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #00FF00;" text="Update" />
+        <Button fx:id="buttondelete" layoutX="33.0" layoutY="336.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #0000FF;" text="Delete" />
+        <TextField fx:id="fdname" alignment="CENTER" layoutX="22.0" layoutY="91.0" promptText="dishes_name" style="-fx-background-color: #FFFAF0;" />
+        <TextField fx:id="finame" alignment="CENTER" layoutX="22.0" layoutY="140.0" promptText="ingredient_name" style="-fx-background-color: #FFFAF0;" />
+        <TextField fx:id="fieldquantity" alignment="CENTER" layoutX="24.0" layoutY="189.0" promptText="quantity_required" style="-fx-background-color: #FFFAF0;" />
+    </children>
+</AnchorPane>

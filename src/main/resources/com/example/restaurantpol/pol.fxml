@@ -15,8 +15,8 @@
         </Label>
         <TextField fx:id="fieldlogin" alignment="CENTER" layoutX="160.0" layoutY="145.0" prefHeight="40.0" prefWidth="274.0" promptText="ЛОГИН"/>
         <TextField fx:id="fieldpassword" alignment="CENTER" layoutX="160.0" layoutY="203.0" prefHeight="40.0" prefWidth="274.0" promptText="ПАРОЛЬ"/>
-        <Button fx:id="buttonvxod" layoutX="160.0" layoutY="260.0" mnemonicParsing="false" onAction="#vxod" prefHeight="40.0" prefWidth="98.0" style="-fx-background-color: #AFEEEE;" text="ВОЙТИ" />
-        <Button fx:id="buttonregister" layoutX="280.0" layoutY="260.0" mnemonicParsing="false" onAction="#pol" prefHeight="40.0" prefWidth="154.0" style="-fx-background-color: #AFEEEE;" text="ЗАРЕГИСТРИРОВАТЬСЯ" />
+        <Button fx:id="buttonvxod" layoutX="160.0" layoutY="260.0" mnemonicParsing="false" onAction="#initialize" prefHeight="40.0" prefWidth="98.0" style="-fx-background-color: #AFEEEE;" text="ВОЙТИ" />
+        <Button fx:id="buttonregister" layoutX="280.0" layoutY="260.0" mnemonicParsing="false" onAction="#initialize" prefHeight="40.0" prefWidth="154.0" style="-fx-background-color: #AFEEEE;" text="ЗАРЕГИСТРИРОВАТЬСЯ" />
         <Button fx:id="buttonchange" layoutX="447.0" layoutY="359.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="146.0" style="-fx-background-color: #AFEEEE;" text="ИЗМЕНИТЬ ДАННЫЕ" />
     </children>
 </AnchorPane>
