@@ -27,10 +27,10 @@
             <Insets />
          </opaqueInsets>
       </TableView>
-      <Button fx:id="buttonadd" layoutX="33.0" layoutY="240.0" mnemonicParsing="false" onAction="#addIngredients" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #FF00FF;" text="Add" />
+      <Button fx:id="buttonadd" layoutX="33.0" layoutY="240.0" mnemonicParsing="false" onAction="#addIngredient" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #FF00FF;" text="Add" />
       <Button fx:id="buttonupdate" layoutX="33.0" layoutY="288.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #00FF00;" text="Update" />
       <Button fx:id="buttondelete" layoutX="33.0" layoutY="336.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #0000FF;" text="Delete" />
-      <TextField fx:id="fieldid" alignment="CENTER" layoutX="22.0" layoutY="72.0" promptText="Id" style="-fx-background-color: #FFFAF0;" />
+      <TextField fx:id="fieldId" alignment="CENTER" layoutX="22.0" layoutY="72.0" promptText="Id" style="-fx-background-color: #FFFAF0;" />
       <TextField fx:id="fieldname" alignment="CENTER" layoutX="22.0" layoutY="110.0" promptText="name" style="-fx-background-color: #FFFAF0;" />
       <TextField fx:id="fieldunit" alignment="CENTER" layoutX="22.0" layoutY="151.0" promptText="unit" style="-fx-background-color: #FFFAF0;" />
       <TextField fx:id="fieldquantity" alignment="CENTER" layoutX="24.0" layoutY="192.0" promptText="quantity" style="-fx-background-color: #FFFAF0;" />

@@ -5,7 +5,6 @@ public class register {
     private static String password;
     private static String access;
 
-
     public register(String username, String password,String access) {
         this.username = username;
         this.password = password;
@@ -38,4 +37,6 @@ public class register {
     public void setAccess(String access) {
         this.access = access;
     }
+
+
 }

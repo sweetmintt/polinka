@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 public class Pol {
 
     @FXML
@@ -28,6 +29,10 @@ public class Pol {
 
     @FXML
     private Button buttonchange;
+    public TextField getFieldPassword() {
+        return fieldpassword;
+    }
+
 
     @FXML
     void initialize() {
@@ -46,8 +51,8 @@ public class Pol {
         });
 
         buttonvxod.setOnAction(actionEvent -> {
-            String login = fieldlogin.getText().trim();
-            String password = fieldpassword.getText().trim();
+            String login = fieldlogin.getText();
+            String password = fieldpassword.getText();
             if (!login.equals("") && !password.equals("")) {
                 loginuser(login, password);
             }
@@ -56,20 +61,28 @@ public class Pol {
 
     private void loginuser(String login, String password) {
         try {
-            sql sql = com.example.restaurantpol.sql.getInstance();
-            register user = new register();
-            user.setUsername(login);
-            ResultSet rez = com.example.restaurantpol.sql.getuser(user);
-            int k = 0;
-            try {
-                while (rez.next()) {
-                    k++;
+            if (sql.checkUserExistence(login)) {
+                sql sql = com.example.restaurantpol.sql.getInstance();
+                register user = new register();
+                user.setUsername(login);
+                user.setPassword(password);
+                ResultSet rez = com.example.restaurantpol.sql.getuser(user);
+                int k = 0;
+                try {
+                    while (rez.next()) {
+                        k++;
+                    }
+                    if (k == 1) {
+                        System.out.println("Вход прошел успешно");
+                        openNewWindow();
+                    } else {
+                        System.out.println("Пользователь не найден");
+                    }
+                } finally {
+                    rez.close();
                 }
-                if (k == 1) {
-                    openNewWindow();
-                }
-            } finally {
-                rez.close();
+            } else {
+                System.out.println("Пользователь не найден");
             }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -90,4 +103,3 @@ public class Pol {
         register.showAndWait();
     }
 }
-

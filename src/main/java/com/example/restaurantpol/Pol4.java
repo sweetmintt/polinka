@@ -48,11 +48,5 @@ public class Pol4 {
         list = sql.getMealsFromDatabase();
         table.setItems(list);
     }
-    /*public void addMeals(String ingredient_name,String dishes_name,int quantity_required) {
-        ingredientId = fieldid.getText();
-        String ingredientName = fieldname.getText();
-        String unitOfMeasurement = fieldunit.getText();
-        String quantityOnHand = fieldquantity.getText();
-        addIngredients(ingredientId, ingredientName, unitOfMeasurement, quantityOnHand);
-    }*/
+
 }

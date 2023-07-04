@@ -1,12 +1,9 @@
 package com.example.restaurantpol;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class sql {
     private static sql instance;
@@ -27,14 +24,21 @@ public class sql {
     public static Connection getConnection() {
         return connection;
     }
-
-    public static ResultSet getuser(register user) {
+    public static ResultSet getuser(register user) throws SQLException, ClassNotFoundException {
+        String query = "SELECT * FROM Staff WHERE username=? AND password=?";
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, user.getUsername());
+        statement.setString(2, user.getPassword());
+        return statement.executeQuery();
+    }
+    public ResultSet getAccess(register user){
         ResultSet get = null;
         String query2 = "SELECT * FROM Staff WHERE username=?";
         try {
             Connection connection = sql.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query2);
-            statement.setString(1, user.getUsername());
+            statement.setString(1, user.getAccess());
             get = statement.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -43,7 +47,6 @@ public class sql {
         }
         return get;
     }
-
 
 
     public static void regist(register user) throws SQLException, ClassNotFoundException {
@@ -105,6 +108,29 @@ public class sql {
         }
         return meals;
     }
+    public static ObservableList<Info> getInfoFromDatabase() {
+        ObservableList<Info> info = FXCollections.observableArrayList();
+        String query5 = "SELECT Ingredients.ingredient_name, Ingredients.quantity_on_hand, Dishes.dish_name, Dish_Ingredients.quantity_required, Tables.table_id, Waiters.waiter_name, Clients.client_name FROM Ingredients JOIN Dish_Ingredients ON Ingredients.ingredient_id = Dish_Ingredients.ingredient_id JOIN Dishes ON Dish_Ingredients.dish_id = Dishes.dish_id JOIN Meal_Dishes ON Dishes.dish_id = Meal_Dishes.dish_id JOIN Meals ON Meal_Dishes.meal_id = Meals.meal_id JOIN Tables ON Meals.table_id = Tables.table_id JOIN Waiters ON Meals.waiter_id = Waiters.waiter_id JOIN Clients ON Meals.client_id = Clients.client_id";
+        try {
+            Connection connection = sql.getInstance().getConnection();
+            PreparedStatement stat = connection.prepareStatement(query5);
+            ResultSet rs = stat.executeQuery();
+            while (rs.next()) {
+                String ingredientName = rs.getString("ingredient_name");
+                int quantity_on_hand = rs.getInt("quantity_on_hand");
+                String dishName = rs.getString("dish_name");
+                int quantity_required = rs.getInt("quantity_required");
+                int table_id = rs.getInt("table_id");
+                String waiterName = rs.getString("waiter_name");
+                String clientName = rs.getString("client_name");
+                Info info1 = new Info(ingredientName,quantity_on_hand,dishName, quantity_required,table_id,waiterName,clientName);
+                info.add(info1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return info;
+    }
     public void addIngredients(String ingredientId, String ingredientName, String unitOfMeasurement, String quantityOnHand) {
         String query4 = "INSERT INTO Ingredients(ingredient_id,ingredient_name,unit_of_measurement,quantity_on_hand) VALUES (?,?,?,?)";
         try {
@@ -121,18 +147,32 @@ public class sql {
             throw new RuntimeException(e);
         }
     }
-    public static boolean checkUserExistence(String username) {
-        String query = "SELECT * FROM Staff WHERE username=?";
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, username);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                return resultSet.next(); // Если есть хотя бы одна запись, значит, пользователь уже существует
-            }
+    public void editIngredients() {
+        String p = Pol3.getFieldId().getText();
+        String o = Pol3.getFieldname().getText();
+        String l = Pol3.getFieldunit().getText();
+        String i =Pol3.getFieldquantity().getText();
+        String query7 = "UPDATE Ingredients set ingredient_id '"+p+"',ingredient_name'"+o+"',unit_of_measurement'"+l+"',quantity_on_hand'"+i+"'where ingrediend_id = '"+p+"' ";
+        try {
+            Connection connection = sql.getInstance().getConnection();
+            PreparedStatement stat = connection.prepareStatement(query7);
+            Pol3.initialize();
         } catch (SQLException e) {
-            throw new RuntimeException("Ошибка при выполнении запроса", e);
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
+    public static boolean checkUserExistence(String login) throws SQLException, ClassNotFoundException {
+        String query = "SELECT * FROM Staff WHERE username=?";
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, login);
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet.next();
+    }
+
+
     public void close() throws SQLException {
         connection.close();
     }

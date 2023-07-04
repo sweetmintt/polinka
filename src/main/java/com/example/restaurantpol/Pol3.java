@@ -1,6 +1,7 @@
 package com.example.restaurantpol;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -8,22 +9,24 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.sql.SQLException;
+
 public class Pol3 {
     @FXML
-    protected TableView<Ingredient> table;
+    private static TableView<Ingredient> table;
 
     @FXML
-    private TableColumn<Ingredient, Integer> ingredient_id;
+    private static TableColumn<Ingredient, Integer> ingredient_id;
 
     @FXML
-    private TableColumn<Ingredient, String> ingredient_name;
+    private static TableColumn<Ingredient, String> ingredient_name;
 
     @FXML
-    private TableColumn<Ingredient, String> unit_of_measurement;
+    private static TableColumn<Ingredient, String> unit_of_measurement;
 
     @FXML
-    private TableColumn<Ingredient, Integer> quantity_on_hand;
-    ObservableList<Ingredient> list;
+    private static TableColumn<Ingredient, Integer> quantity_on_hand;
+    static ObservableList<Ingredient> list;
     @FXML
     private Button buttonadd;
 
@@ -34,32 +37,55 @@ public class Pol3 {
     private Button buttondelete;
 
     @FXML
-    protected static TextField fieldid;
+    private static TextField fieldId;
 
     @FXML
-    protected static TextField fieldname;
+    private static TextField fieldname;
 
     @FXML
-    protected static TextField fieldunit;
+    private static TextField fieldunit;
 
     @FXML
-    protected static TextField fieldquantity;
+    private static TextField fieldquantity;
 
-    @FXML
-    public void addIngredients(String ingredientId, String ingredientName, String unitOfMeasurement, String quantityOnHand){
-        ingredientId = fieldid.getText();
-        ingredientName = fieldname.getText();
-        unitOfMeasurement = fieldunit.getText();
-        quantityOnHand = fieldquantity.getText();
-        addIngredients(ingredientId, ingredientName, unitOfMeasurement, quantityOnHand);
+    public static TextField getFieldId() {
+        return fieldId;
     }
+
+    public static TextField getFieldname() {
+        return fieldname;
+    }
+
+    public static TextField getFieldunit() {
+        return fieldunit;
+    }
+
+    public static TextField getFieldquantity() {
+        return fieldquantity;
+    }
+
     @FXML
-    public void initialize() {
+    public static void initialize() {
         ingredient_id.setCellValueFactory(new PropertyValueFactory<Ingredient,Integer>("ingredient_id"));
         ingredient_name.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("ingredient_name"));
         unit_of_measurement.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("unit_of_measurement"));
         quantity_on_hand.setCellValueFactory(new PropertyValueFactory<Ingredient,Integer>("quantity_on_hand"));
         list = sql.getIngredientsFromDatabase();
         table.setItems(list);
+    }
+
+    @FXML
+    public void addIngredient(ActionEvent event) {
+        buttonadd.setOnAction(ActionEvent -> {
+            sql bd = null;
+            try {
+                bd = new sql();
+                bd.addIngredients(fieldId.getText(), fieldname.getText(), fieldunit.getText(), fieldquantity.getText());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }
