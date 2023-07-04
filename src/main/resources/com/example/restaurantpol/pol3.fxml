@@ -27,7 +27,7 @@
             <Insets />
          </opaqueInsets>
       </TableView>
-      <Button fx:id="buttonadd" layoutX="33.0" layoutY="240.0" mnemonicParsing="false" onAction="#addIngredient" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #FF00FF;" text="Add" />
+      <Button fx:id="buttonadd" layoutX="33.0" layoutY="240.0" mnemonicParsing="false"  prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #FF00FF;" text="Add" />
       <Button fx:id="buttonupdate" layoutX="33.0" layoutY="288.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #00FF00;" text="Update" />
       <Button fx:id="buttondelete" layoutX="33.0" layoutY="336.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #0000FF;" text="Delete" />
       <TextField fx:id="fieldId" alignment="CENTER" layoutX="22.0" layoutY="72.0" promptText="Id" style="-fx-background-color: #FFFAF0;" />

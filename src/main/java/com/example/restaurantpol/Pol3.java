@@ -13,20 +13,20 @@ import java.sql.SQLException;
 
 public class Pol3 {
     @FXML
-    private static TableView<Ingredient> table;
+    private TableView<Ingredient> table;
 
     @FXML
-    private static TableColumn<Ingredient, Integer> ingredient_id;
+    private  TableColumn<Ingredient, Integer> ingredient_id;
 
     @FXML
-    private static TableColumn<Ingredient, String> ingredient_name;
+    private TableColumn<Ingredient, String> ingredient_name;
 
     @FXML
-    private static TableColumn<Ingredient, String> unit_of_measurement;
+    private TableColumn<Ingredient, String> unit_of_measurement;
 
     @FXML
-    private static TableColumn<Ingredient, Integer> quantity_on_hand;
-    static ObservableList<Ingredient> list;
+    private TableColumn<Ingredient, Integer> quantity_on_hand;
+
     @FXML
     private Button buttonadd;
 
@@ -48,7 +48,7 @@ public class Pol3 {
     @FXML
     private static TextField fieldquantity;
 
-    public static TextField getFieldId() {
+    /*public static TextField getFieldId() {
         return fieldId;
     }
 
@@ -62,10 +62,10 @@ public class Pol3 {
 
     public static TextField getFieldquantity() {
         return fieldquantity;
-    }
-
+    }*/
+    ObservableList<Ingredient> list;
     @FXML
-    public static void initialize() {
+    public void initialize() {
         ingredient_id.setCellValueFactory(new PropertyValueFactory<Ingredient,Integer>("ingredient_id"));
         ingredient_name.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("ingredient_name"));
         unit_of_measurement.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("unit_of_measurement"));
@@ -74,8 +74,7 @@ public class Pol3 {
         table.setItems(list);
     }
 
-    @FXML
-    public void addIngredient(ActionEvent event) {
+    /*public void addIngredient(ActionEvent event) {
         buttonadd.setOnAction(ActionEvent -> {
             sql bd = null;
             try {
@@ -87,5 +86,5 @@ public class Pol3 {
                 throw new RuntimeException(e);
             }
         });
-    }
+    }*/
 }

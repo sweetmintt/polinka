@@ -1,5 +1,4 @@
 package com.example.restaurantpol;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,6 +30,7 @@ public class Pol2 {
     @FXML
     void register() {
         buttonregister.setOnAction(actionEvent -> {
+            System.out.println("Регистрация прошла успешна");
             try {
                 register1();
             } catch (SQLException e) {

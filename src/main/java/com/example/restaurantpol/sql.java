@@ -1,29 +1,25 @@
 package com.example.restaurantpol;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.*;
-
 public class sql {
     private static sql instance;
     private static Connection connection;
-
     protected sql() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection("jdbc:mysql://std-mysql.ist.mospolytech.ru:3306/std_2282_restaurant", "std_2282_restaurant", "polina2810");
     }
-
     public static sql getInstance() throws SQLException, ClassNotFoundException {
         if (instance == null) { //если объект еще не создан
             instance = new sql(); //создать новый объект
         }
         return instance; //вернуть ранее созданный объект
     }
-
     public static Connection getConnection() {
         return connection;
     }
+
+
     public static ResultSet getuser(register user) throws SQLException, ClassNotFoundException {
         String query = "SELECT * FROM Staff WHERE username=? AND password=?";
         Connection connection = getConnection();
@@ -49,7 +45,7 @@ public class sql {
     }
 
 
-    public static void regist(register user) throws SQLException, ClassNotFoundException {
+    public void regist(register user) throws SQLException, ClassNotFoundException {
         if (checkUserExistence(user.getUsername())) {
             System.out.println("Пользователь уже существует");
         } else {
@@ -131,19 +127,27 @@ public class sql {
         }
         return info;
     }
-    public void addIngredients(String ingredientId, String ingredientName, String unitOfMeasurement, String quantityOnHand) {
-        String query4 = "INSERT INTO Ingredients(ingredient_id,ingredient_name,unit_of_measurement,quantity_on_hand) VALUES (?,?,?,?)";
+    public void updateUser(String password, String newName, String newAccess) throws SQLException {
+        String query = "UPDATE Staff SET password = ?, access = ? WHERE username = ?";
+        register user = new register();
+        PreparedStatement statement = connection.prepareStatement(query);
+        String hashedPassword = dobavlenie.hashPassword(user.getPassword());
+        statement.setString(1, newName);
+        statement.setString(2, hashedPassword);
+        statement.setString(3, newAccess);
+        statement.executeUpdate();
+    }
+    /*public void addIngredients(String ingredientId, String ingredientName, String unitOfMeasurement, String quantityOnHand) {
+        String query = "INSERT INTO Ingredients (ingredient_id, ingredient_name, unit_of_measurement, quantity_on_hand) VALUES (?, ?, ?, ?)";
         try {
             Connection connection = sql.getInstance().getConnection();
-            PreparedStatement stat = connection.prepareStatement(query4);
+            PreparedStatement stat = connection.prepareStatement(query);
             stat.setString(1, ingredientId);
             stat.setString(2, ingredientName);
             stat.setString(3, unitOfMeasurement);
             stat.setString(4, quantityOnHand);
             stat.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -156,22 +160,24 @@ public class sql {
         try {
             Connection connection = sql.getInstance().getConnection();
             PreparedStatement stat = connection.prepareStatement(query7);
-            Pol3.initialize();
+            //Pol3.initialize();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
     public static boolean checkUserExistence(String login) throws SQLException, ClassNotFoundException {
         String query = "SELECT * FROM Staff WHERE username=?";
-        Connection connection = getConnection();
+        Connection connection = com.example.restaurantpol.sql.getInstance().getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, login);
         ResultSet resultSet = statement.executeQuery();
-        return resultSet.next();
+        int k = 0;
+        if (resultSet.next()){k++;}
+        if (k == 1) return true;
+        else return false;
     }
-
 
     public void close() throws SQLException {
         connection.close();
