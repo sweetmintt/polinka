@@ -5,9 +5,9 @@ public class Meals {
     private String dishes_name;
     private int quantity_required;
 
-    public Meals(String ingredient_name,String dishes_name,int quantity_required) {
-        this.ingredient_name = ingredient_name;
+    public Meals(String dishes_name,String ingredient_name,int quantity_required) {
         this.dishes_name = dishes_name;
+        this.ingredient_name = ingredient_name;
         this.quantity_required = quantity_required;
     }
 
