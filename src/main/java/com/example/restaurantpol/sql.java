@@ -124,18 +124,27 @@ public class sql {
         }
         return info;
     }
-    public void updateUser(String password, String newName, String newAccess) throws SQLException, ClassNotFoundException {
-        register user = new register();
-        if (checkUserExistence(user.getUsername())) {
-            String query = "UPDATE Staff SET password = ?, access = ? WHERE username = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            String hashedPassword = dobavlenie.hashPassword(user.getPassword());
-            statement.setString(1, newName);
-            statement.setString(2, hashedPassword);
-            statement.setString(3, newAccess);
-            statement.executeUpdate();
+    public void updateUser(String login, String password, String access) {
+        try {
+            Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE Staff SET password = ?, access = ? WHERE username = ?");
+            String hashedPassword = dobavlenie.hashPassword(password);
+            stmt.setString(1, hashedPassword);
+            stmt.setString(2, access);
+            stmt.setString(3, login);
+            int rowsAffected = stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+            if (rowsAffected > 0) {
+                System.out.println("User updated successfully.");
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+
     public void addIngredients(String id, String name, String unit, String quantity) throws SQLException, ClassNotFoundException {
         String query = "INSERT INTO Ingredients (ingredient_id, ingredient_name, unit_of_measurement, quantity_on_hand) VALUES (?, ?, ?, ?)";
         try {
