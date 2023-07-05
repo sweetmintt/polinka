@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 public class Pol {
+    private Pol polController;
     @FXML
     private TextField fieldlogin;
     @FXML
@@ -20,6 +21,7 @@ public class Pol {
     private Button buttonregister;
     @FXML
     private Button buttonchange;
+
     @FXML
     void initialize() {
         buttonregister.setOnAction(actionEvent -> {
@@ -35,11 +37,20 @@ public class Pol {
             register.setScene(new Scene(polina));
             register.showAndWait();
         });
+        polController = new Pol();
         buttonvxod.setOnAction(actionEvent -> {
             String login = fieldlogin.getText();
             String password = fieldpassword.getText();
             if (!login.equals("") && !password.equals("")) {
-                loginuser(login, password);
+                PolModel polModel = null;
+                try {
+                    polModel = new PolModel(polController);
+                    polModel.loginuser(login, password);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         buttonchange.setOnAction(actionEvent -> {
@@ -56,31 +67,28 @@ public class Pol {
             register.showAndWait();
         });
     }
-    private void loginuser(String login, String password) {
+
+    protected void openPol1Window() {
         try {
-            if (sql.checkUserExistence(login)) {
-                System.out.println("Вход прошел успешно");
-                openNewWindow();
-            } else {
-                System.out.println("Пользователь не найден");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private void openNewWindow() {
-        FXMLLoader vxod1 = new FXMLLoader();
-        vxod1.setLocation(Pol.class.getResource("pol1.fxml"));
-        try {
-            vxod1.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("pol1.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Parent polina = vxod1.getRoot();
-        Stage register = new Stage();
-        register.setScene(new Scene(polina));
-        register.showAndWait();
+    }
+
+    protected void openPol7Window() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("pol7.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

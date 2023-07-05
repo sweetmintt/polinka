@@ -1,14 +1,21 @@
 package com.example.restaurantpol;
 
 public class Meals {
-    private String ingredient_name;
     private String dishes_name;
-    private int quantity_required;
 
-    public Meals(String dishes_name,String ingredient_name,int quantity_required) {
+    private int id;
+
+    public Meals(int id,String dishes_name) {
+        this.id = id;
         this.dishes_name = dishes_name;
-        this.ingredient_name = ingredient_name;
-        this.quantity_required = quantity_required;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDishes_name() {
@@ -19,19 +26,4 @@ public class Meals {
         this.dishes_name = dishes_name;
     }
 
-    public String getIngredient_name() {
-        return ingredient_name;
-    }
-
-    public void setIngredient_name(String ingredient_name) {
-        this.ingredient_name = ingredient_name;
-    }
-
-    public int getQuantity_required() {
-        return quantity_required;
-    }
-
-    public void setQuantity_required(int quantity_required) {
-        this.quantity_required = quantity_required;
-    }
 }

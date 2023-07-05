@@ -13,6 +13,7 @@ public class Ingredient {
         this.quantity_on_hand = quantity;
     }
 
+
     public int getIngredient_id() {
         return ingredient_id;
     }

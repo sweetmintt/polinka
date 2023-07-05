@@ -18,19 +18,17 @@
         </Label>
         <TableView fx:id="table" editable="true" layoutX="193.0" layoutY="70.0" prefHeight="316.0" prefWidth="402.0" tableMenuButtonVisible="true">
             <columns>
-                <TableColumn fx:id="dishes_name" prefWidth="135.0" text="dishes_name" />
-                <TableColumn fx:id="ingredient_name" minWidth="0.0" prefWidth="140.0" text="ingredient_name" />
-                <TableColumn fx:id="quantity_required" prefWidth="112.0" text="quantity_required" />
+            <TableColumn fx:id="id" prefWidth="171.0" text="dish_id" />
+                <TableColumn fx:id="dishes_name" prefWidth="216.0" text="dishes_name" />
             </columns>
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>
         </TableView>
-        <Button fx:id="buttonadd" layoutX="33.0" layoutY="240.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #FF00FF;" text="Add" />
-        <Button fx:id="buttonupdate" layoutX="33.0" layoutY="288.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #00FF00;" text="Update" />
-        <Button fx:id="buttondelete" layoutX="33.0" layoutY="336.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #0000FF;" text="Delete" />
-        <TextField fx:id="fdname" alignment="CENTER" layoutX="22.0" layoutY="91.0" promptText="dishes_name" style="-fx-background-color: #FFFAF0;" />
-        <TextField fx:id="finame" alignment="CENTER" layoutX="22.0" layoutY="140.0" promptText="ingredient_name" style="-fx-background-color: #FFFAF0;" />
-        <TextField fx:id="fieldquantity" alignment="CENTER" layoutX="24.0" layoutY="189.0" promptText="quantity_required" style="-fx-background-color: #FFFAF0;" />
+        <Button fx:id="buttonadd" layoutX="33.0" layoutY="230.0" mnemonicParsing="false" onAction="#addMeals" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #FF00FF;" text="Add" />
+        <Button fx:id="buttonupdate" layoutX="33.0" layoutY="281.0" mnemonicParsing="false" onAction="#updateMeals" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #00FF00;" text="Update" />
+        <Button fx:id="buttondelete" layoutX="33.0" layoutY="336.0" mnemonicParsing="false" onAction="#deleteMeals" prefHeight="32.0" prefWidth="127.0" style="-fx-background-color: #0000FF;" text="Delete" />
+        <TextField fx:id="fdname" alignment="CENTER" layoutX="24.0" layoutY="170.0" promptText="dishes_name" style="-fx-background-color: #FFFAF0;" />
+      <TextField fx:id="fieldId" alignment="CENTER" layoutX="24.0" layoutY="122.0" promptText="dish_id" style="-fx-background-color: #FFFAF0;" />
     </children>
 </AnchorPane>

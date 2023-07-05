@@ -28,23 +28,20 @@ public class sql {
         statement.setString(2, user.getPassword());
         return statement.executeQuery();
     }
-    public ResultSet getAccess(register user){
-        ResultSet get = null;
-        String query2 = "SELECT * FROM Staff WHERE username=?";
-        try {
-            Connection connection = sql.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(query2);
-            statement.setString(1, user.getAccess());
-            get = statement.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException ex) {
-            throw new RuntimeException(ex);
+    public static boolean loginuser1(String login, String password) throws SQLException, ClassNotFoundException {
+        String query = "SELECT * FROM Staff WHERE username=? ";
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, login);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            String role = resultSet.getString("access");
+            if (role.equals("Администратор")) {
+                return true;
+            }
         }
-        return get;
+        return false;
     }
-
-
     public void regist(register user) throws SQLException, ClassNotFoundException {
         if (checkUserExistence(user.getUsername())) {
             System.out.println("Пользователь уже существует");
@@ -65,19 +62,19 @@ public class sql {
         }
     }
 
-    public static ObservableList<Ingredient> getIngredientsFromDatabase() {
+    public static ObservableList<Ingredient> getIngredientsFromDatabase() throws SQLException, ClassNotFoundException {
+        String query = "SELECT * FROM Ingredients";
         ObservableList<Ingredient> ingredients = FXCollections.observableArrayList();
-        String query3 = "SELECT * FROM Ingredients";
         try {
             Connection connection = sql.getInstance().getConnection();
-            PreparedStatement stat = connection.prepareStatement(query3);
-            ResultSet rs = stat.executeQuery();
-            while (rs.next()) {
-                int ingredientId = rs.getInt("ingredient_id");
-                String ingredientName = rs.getString("ingredient_name");
-                String unitOfMeasurement = rs.getString("unit_of_measurement");
-                int quantityOnHand = rs.getInt("quantity_on_hand");
-                Ingredient ingredient = new Ingredient(ingredientId, ingredientName, unitOfMeasurement, quantityOnHand);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                int id = resultSet.getInt("ingredient_id");
+                String name = resultSet.getString("ingredient_name");
+                String unit = resultSet.getString("unit_of_measurement");
+                int quantity = resultSet.getInt("quantity_on_hand");
+                Ingredient ingredient = new Ingredient(id, name, unit, quantity);
                 ingredients.add(ingredient);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -85,18 +82,18 @@ public class sql {
         }
         return ingredients;
     }
+
     public static ObservableList<Meals> getMealsFromDatabase() {
         ObservableList<Meals> meals = FXCollections.observableArrayList();
-        String query3 = "SELECT d.dish_name, i.ingredient_name, di.quantity_required FROM Dishes d JOIN Dish_Ingredients di ON d.dish_id = di.dish_id JOIN Ingredients i ON di.ingredient_id = i.ingredient_id;";
+        String query3 = "SELECT * FROM Dishes";
         try {
             Connection connection = sql.getInstance().getConnection();
             PreparedStatement stat = connection.prepareStatement(query3);
             ResultSet rs = stat.executeQuery();
             while (rs.next()) {
+                int id = rs.getInt("dish_id");
                 String dishName = rs.getString("dish_name");
-                String ingredientName = rs.getString("ingredient_name");
-                int quantity = rs.getInt("quantity_required");
-                Meals meal = new Meals(dishName, ingredientName, quantity);
+                Meals meal = new Meals(id,dishName);
                 meals.add(meal);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -127,46 +124,57 @@ public class sql {
         }
         return info;
     }
-    public void updateUser(String password, String newName, String newAccess) throws SQLException {
-        String query = "UPDATE Staff SET password = ?, access = ? WHERE username = ?";
+    public void updateUser(String password, String newName, String newAccess) throws SQLException, ClassNotFoundException {
         register user = new register();
-        PreparedStatement statement = connection.prepareStatement(query);
-        String hashedPassword = dobavlenie.hashPassword(user.getPassword());
-        statement.setString(1, newName);
-        statement.setString(2, hashedPassword);
-        statement.setString(3, newAccess);
-        statement.executeUpdate();
+        if (checkUserExistence(user.getUsername())) {
+            String query = "UPDATE Staff SET password = ?, access = ? WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            String hashedPassword = dobavlenie.hashPassword(user.getPassword());
+            statement.setString(1, newName);
+            statement.setString(2, hashedPassword);
+            statement.setString(3, newAccess);
+            statement.executeUpdate();
+        }
     }
-    /*public void addIngredients(String ingredientId, String ingredientName, String unitOfMeasurement, String quantityOnHand) {
+    public void addIngredients(String id, String name, String unit, String quantity) throws SQLException, ClassNotFoundException {
         String query = "INSERT INTO Ingredients (ingredient_id, ingredient_name, unit_of_measurement, quantity_on_hand) VALUES (?, ?, ?, ?)";
         try {
             Connection connection = sql.getInstance().getConnection();
-            PreparedStatement stat = connection.prepareStatement(query);
-            stat.setString(1, ingredientId);
-            stat.setString(2, ingredientName);
-            stat.setString(3, unitOfMeasurement);
-            stat.setString(4, quantityOnHand);
-            stat.executeUpdate();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, id);
+            statement.setString(2, name);
+            statement.setString(3, unit);
+            statement.setString(4, quantity);
+            statement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
-    public void editIngredients() {
-        String p = Pol3.getFieldId().getText();
-        String o = Pol3.getFieldname().getText();
-        String l = Pol3.getFieldunit().getText();
-        String i =Pol3.getFieldquantity().getText();
-        String query7 = "UPDATE Ingredients set ingredient_id '"+p+"',ingredient_name'"+o+"',unit_of_measurement'"+l+"',quantity_on_hand'"+i+"'where ingrediend_id = '"+p+"' ";
+    public void updateIngredient(String id, String name, String unit, String quantity) throws SQLException, ClassNotFoundException {
+        String query = "UPDATE Ingredients SET ingredient_name = ?, unit_of_measurement = ?, quantity_on_hand = ? WHERE ingredient_id = ?";
         try {
             Connection connection = sql.getInstance().getConnection();
-            PreparedStatement stat = connection.prepareStatement(query7);
-            //Pol3.initialize();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, name);
+            statement.setString(2, unit);
+            statement.setString(3, quantity);
+            statement.setString(4, id);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
+    public void deleteIngredient(String id) throws SQLException, ClassNotFoundException {
+        String query = "DELETE FROM Ingredients WHERE ingredient_id = ?";
+        try {
+            Connection connection = sql.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, id);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static boolean checkUserExistence(String login) throws SQLException, ClassNotFoundException {
         String query = "SELECT * FROM Staff WHERE username=?";
         Connection connection = com.example.restaurantpol.sql.getInstance().getConnection();
@@ -177,6 +185,31 @@ public class sql {
         if (resultSet.next()){k++;}
         if (k == 1) return true;
         else return false;
+    }
+    public void addMeals(int id, String dishName) throws SQLException, ClassNotFoundException {
+        String query = "INSERT INTO Dishes (dish_id, dish_name) VALUES (?, ?)";
+        try {
+            Connection connection = sql.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            statement.setString(2, dishName);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateMeals(int id, String dishName) throws SQLException, ClassNotFoundException {
+        Connection conn = getConnection();
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Dishes SET dish_name = ? WHERE dish_id = ?");
+        stmt.setString(1, dishName);
+        stmt.setInt(2, id);
+        stmt.executeUpdate();
+    }
+    public void deleteMeals(int id,String name) throws SQLException, ClassNotFoundException {
+        Connection conn = getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Dishes WHERE dish_id = ?");
+        stmt.setInt(1, id);
+        stmt.executeUpdate();
     }
 
     public void close() throws SQLException {

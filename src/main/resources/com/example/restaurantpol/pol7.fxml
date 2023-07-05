@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFA07A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.restaurantpol.Pol7">
+    <children>
+        <Label layoutX="188.0" layoutY="6.0" text="RESTAURANT">
+            <font>
+                <Font name="Agency FB" size="60.0" />
+            </font>
+        </Label>
+        <Button fx:id="buttonInfo" alignment="CENTER" layoutX="175.0" layoutY="177.0" mnemonicParsing="false" onAction="#initialize" prefHeight="65.0" prefWidth="267.0" style="-fx-background-color: #AFEEEE;" text="ИНФОРМАЦИЯ">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Button>
+    </children>
+</AnchorPane>

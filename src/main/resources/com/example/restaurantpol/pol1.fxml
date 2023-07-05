@@ -12,15 +12,15 @@
                 <Font name="Agency FB" size="60.0" />
             </font>
         </Label>
-        <Button fx:id="buttondishes" layoutX="206.0" layoutY="105.0" mnemonicParsing="false" onAction="#butinfo" prefHeight="50.0" prefWidth="204.0" style="-fx-background-color: #AFEEEE;" text="БЛЮДА" >
+        <Button fx:id="buttondishes" layoutX="206.0" layoutY="105.0" mnemonicParsing="false" onAction="#dish" prefHeight="50.0" prefWidth="204.0" style="-fx-background-color: #AFEEEE;" text="БЛЮДА" >
             <font>
                 <Font size="30.0" />
             </font></Button>
-        <Button fx:id="buttoningridients" layoutX="178.0" layoutY="194.0" mnemonicParsing="false" onAction="#butinfo" prefHeight="65.0" prefWidth="260.0" style="-fx-background-color: #AFEEEE;" text="ИНГРЕДИЕНТЫ" >
+        <Button fx:id="buttoningridients" layoutX="178.0" layoutY="194.0" mnemonicParsing="false" onAction="#ingredient" prefHeight="65.0" prefWidth="260.0" style="-fx-background-color: #AFEEEE;" text="ИНГРЕДИЕНТЫ" >
             <font>
                 <Font size="30.0" />
             </font> </Button>
-      <Button fx:id="buttonInfo" alignment="CENTER" layoutX="175.0" layoutY="283.0" mnemonicParsing="false" onAction="#butinfo" prefHeight="65.0" prefWidth="267.0" style="-fx-background-color: #AFEEEE;" text="ИНФОРМАЦИЯ">
+      <Button fx:id="buttonInfo" alignment="CENTER" layoutX="175.0" layoutY="283.0" mnemonicParsing="false" onAction="#initialize" prefHeight="65.0" prefWidth="267.0" style="-fx-background-color: #AFEEEE;" text="ИНФОРМАЦИЯ">
          <font>
             <Font size="30.0" />
          </font>

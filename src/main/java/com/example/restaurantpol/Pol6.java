@@ -37,19 +37,10 @@ public class Pol6 {
             } else {
                 access = "Пользователь";
             }
-            updateUser(fieldlogin.getText(),fieldpassword.getText(),access);
+            Pol6Model pol6Model = new Pol6Model();
+            pol6Model.updateUser(fieldlogin.getText(), fieldpassword.getText(), access);
             System.out.println("Изменение данных прошло успешно");
         });
-    }
-    public static void updateUser(String userName, String password, String newAccess) {
-        try {
-            sql sql = com.example.restaurantpol.sql.getInstance();
-            sql.updateUser(userName, password, newAccess);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
 

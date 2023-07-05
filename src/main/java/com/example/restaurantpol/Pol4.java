@@ -1,11 +1,11 @@
 package com.example.restaurantpol;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.sql.SQLException;
 
 public class Pol4 {
 
@@ -13,13 +13,10 @@ public class Pol4 {
     private TableView<Meals> table;
 
     @FXML
-    private TableColumn<Ingredient, Integer> dishes_name;
+    private TableColumn<Meals, Integer> id;
 
     @FXML
-    private TableColumn<Ingredient, String> ingredient_name;
-
-    @FXML
-    private TableColumn<Ingredient, Integer> quantity_required;
+    private TableColumn<Meals, String> dishes_name;
 
     @FXML
     private Button buttonadd;
@@ -34,17 +31,69 @@ public class Pol4 {
     private TextField fdname;
 
     @FXML
-    private TextField finame;
-
-    @FXML
-    private TextField fieldquantity;
+    private TextField fieldId;
 
     ObservableList<Meals> list;
+
+    @FXML
+    void addMeals(ActionEvent event) {
+        try {
+            int id= Integer.parseInt(fieldId.getText());
+            String name = fdname.getText();
+            sql bd = new sql();
+            bd.addMeals(id, name);
+            // Обновляем данные в таблице
+            list = sql.getMealsFromDatabase();
+            table.setItems(list);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    void updateMeals(ActionEvent event) {
+        try {
+            int id= Integer.parseInt(fieldId.getText());
+            String name = fdname.getText();
+
+            sql bd = new sql();
+            bd.updateMeals(id,name);
+
+            // Обновляем данные в таблице
+            list = sql.getMealsFromDatabase();
+            table.setItems(list);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    void deleteMeals(ActionEvent event) {
+        try {
+            int id= Integer.parseInt(fieldId.getText());
+            String name = fdname.getText();
+
+            sql bd = new sql();
+            bd.deleteMeals(id,name);
+
+            // Обновляем данные в таблице
+            list = sql.getMealsFromDatabase();
+            table.setItems(list);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @FXML
     public void initialize() {
-        dishes_name.setCellValueFactory(new PropertyValueFactory<Ingredient,Integer>("dishes_name"));
-        ingredient_name.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("ingredient_name"));
-        quantity_required.setCellValueFactory(new PropertyValueFactory<Ingredient,Integer>("quantity_required"));
+        id.setCellValueFactory(new PropertyValueFactory<Meals,Integer>("id"));
+        dishes_name.setCellValueFactory(new PropertyValueFactory<Meals,String>("dishes_name"));
         list = sql.getMealsFromDatabase();
         table.setItems(list);
     }
